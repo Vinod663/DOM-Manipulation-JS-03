@@ -1,71 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Assignment-09</title>
-  <style>
-      body{
-          background-color: white;
-          padding: 50px;
-      }
-      h1{
-          color: red;
-            text-align: center;
-      }
-      .box{
-          width: 150px;
-          height: 50px;
-          border: 1px solid black;
-      }
-      .box-section{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 100px;
-      }
-      .button-section{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 20px;
-      }
-      .button-section button{
-          width: 50px;
-          height: 25px;
-          margin: 5px;
-          background-color: blue;
-          border: none;
-          color: white;
-      }
-      .button-section button:nth-child(2){
-          background-color: red;
-      }
+    <title>Knight Rider Light</title>
+    <style>
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
 
-  </style>
+        .box {
+            display: flex;
+            gap: 5px;
+        }
+
+        .light {
+            width: 100px;
+            height: 50px;
+            background-color: #111;
+            transition: background-color 0.2s;
+        }
+
+        .active  { background-color: #330000; }
+        .trail1  { background-color: #660000; }
+        .trail2  { background-color: #990000; }
+        .trail3  { background-color: #cc0000; }
+        .trail4  { background-color: #ff0000; }
+        .trail5  { background-color: #ff4d4d; }
+        .trail6  { background-color: #ff9999; }
+    </style>
 </head>
 <body>
-<h1>JavaScript Knight Rider</h1>
-<section class="box-section">
 
-    <div class="box" ></div>
-    <div class="box" ></div>
-    <div class="box" ></div>
-    <div class="box" ></div>
-    <div class="box" ></div>
+<div class="box" id="lightBox">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
 
-
-</section>
-
-<section class="button-section">
-    <button>Start</button>
-    <button>Stop</button>
-</section>
-
-
-
+</div>
 
 <script>
+    let lights = document.querySelectorAll('.light');
+    let current = 0;
+    let direction = 1;
 
+    function updateLights() {
+        // Clear all lights
+        lights.forEach(light => light.className = 'light');
+
+        // Add main active light
+        if (lights[current]) lights[current].classList.add('active');
+
+        // Add trails before
+        if (lights[current - 1]) lights[current - 1].classList.add('trail1');
+        if (lights[current - 2]) lights[current - 2].classList.add('trail2');
+        if (lights[current - 3]) lights[current - 3].classList.add('trail3');
+
+        // Add trails after
+        if (lights[current + 1]) lights[current + 1].classList.add('trail4');
+        if (lights[current + 2]) lights[current + 2].classList.add('trail5');
+        if (lights[current + 3]) lights[current + 3].classList.add('trail6');
+
+        current += direction;
+
+        if (current === 0 || current === lights.length - 1) {
+            direction *= -1;
+        }
+    }
+
+    setInterval(updateLights, 100);
 </script>
+
 </body>
 </html>
